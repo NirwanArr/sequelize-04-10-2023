@@ -12,25 +12,25 @@ const createProduct = async (req, res) => {
         res.status(200).json({
             status: "success",
             data: {
-                newProduct,
-            },
+                newProduct
+            }
         });
     } catch (err) {
-        req.status(400).json({
-            status: "failed",
-            mesagge: err.mesagge
+        res.status(404).json({
+            status: 'failed',
+            message: err.message
         });
     }
 };
 
 const findProduct = async (req, res) => {
     try {
-        const newProduct = await Product.findAll();
+        const product = await Product.findAll();
 
         res.status(200).json({
             status: "success",
             data: {
-                newProduct,
+                product,
             },
         });
     } catch (err) {
@@ -64,16 +64,19 @@ const findProductById = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
+    const { name, price, stock } = req.body;
     try {
         const product = await Product.update({
             name,
             stock,
-            price,
-            where: {
-                id: req.params.id,
-            }
-        });
-
+            price
+        },
+            {
+                where: {
+                    id: req.params.id,
+                }
+            },
+        );
         res.status(200).json({
             status: "success",
             data: {
@@ -81,7 +84,7 @@ const updateProduct = async (req, res) => {
             },
         });
     } catch (err) {
-        req.status(400).json({
+        res.status(400).json({
             status: "failed",
             mesagge: err.mesagge
         });
@@ -103,7 +106,7 @@ const deleteProduct = async (req, res) => {
             },
         });
     } catch (err) {
-        req.status(400).json({
+        res.status(400).json({
             status: "failed",
             mesagge: err.mesagge
         });
