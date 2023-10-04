@@ -56,7 +56,7 @@ const findProductById = async (req, res) => {
             },
         });
     } catch (err) {
-        req.status(400).json({
+        res.status(400).json({
             status: "failed",
             mesagge: err.mesagge
         });
